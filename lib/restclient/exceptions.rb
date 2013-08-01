@@ -1,32 +1,43 @@
 module RestClient
 
+  # Unless otherwise noted, all status codes are from IANA's HTTP Status Code
+  # Registry
+  # (http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
+
   STATUSES = {100 => 'Continue',
               101 => 'Switching Protocols',
-              102 => 'Processing', #WebDAV
+              102 => 'Processing',
+              # 103..199 => :unassigned,
 
               200 => 'OK',
               201 => 'Created',
               202 => 'Accepted',
-              203 => 'Non-Authoritative Information', # http/1.1
+              203 => 'Non-Authoritative Information',
               204 => 'No Content',
               205 => 'Reset Content',
               206 => 'Partial Content',
-              207 => 'Multi-Status', #WebDAV
+              207 => 'Multi-Status',
+              208 => 'Already Reported',
+              # 209..225 => :unassigned,
+              226 => 'IM Used',
+              # 227..299 => :unassigned,
 
               300 => 'Multiple Choices',
               301 => 'Moved Permanently',
               302 => 'Found',
-              303 => 'See Other', # http/1.1
+              303 => 'See Other',
               304 => 'Not Modified',
-              305 => 'Use Proxy', # http/1.1
-              306 => 'Switch Proxy', # no longer used
-              307 => 'Temporary Redirect', # http/1.1
+              305 => 'Use Proxy',
+              306 => 'Switch Proxy', # no longer used, officially reserved
+              307 => 'Temporary Redirect',
+              308 => 'Permanent Redirect',
+              # 309..399 => :unassigned,
 
               400 => 'Bad Request',
               401 => 'Unauthorized',
               402 => 'Payment Required',
               403 => 'Forbidden',
-              404 => 'Resource Not Found',
+              404 => 'Resource Not Found',  # officially "Not Found"
               405 => 'Method Not Allowed',
               406 => 'Not Acceptable',
               407 => 'Proxy Authentication Required',
@@ -40,15 +51,21 @@ module RestClient
               415 => 'Unsupported Media Type',
               416 => 'Requested Range Not Satisfiable',
               417 => 'Expectation Failed',
-              418 => 'I\'m A Teapot',
-              421 => 'Too Many Connections From This IP',
-              422 => 'Unprocessable Entity', #WebDAV
-              423 => 'Locked', #WebDAV
-              424 => 'Failed Dependency', #WebDAV
-              425 => 'Unordered Collection', #WebDAV
+              418 => 'I\'m A Teapot',  # unknown :-)
+              421 => 'Too Many Connections From This IP',  # unknown
+              422 => 'Unprocessable Entity',
+              423 => 'Locked',
+              424 => 'Failed Dependency',
+              425 => 'Unordered Collection', # unknown, officially unassigned
               426 => 'Upgrade Required',
-              449 => 'Retry With', #Microsoft
-              450 => 'Blocked By Windows Parental Controls', #Microsoft
+              # 427 => :unassigned,
+              428 => 'Precondition Required',
+              429 => 'Too Many Requests',
+              # 430 => :unassigned,
+              431 => 'Request Header Fields Too Large',
+              # 432..499 => :unassigned,
+              449 => 'Retry With', # Microsoft
+              450 => 'Blocked By Windows Parental Controls', # Microsoft
 
               500 => 'Internal Server Error',
               501 => 'Not Implemented',
@@ -56,10 +73,14 @@ module RestClient
               503 => 'Service Unavailable',
               504 => 'Gateway Timeout',
               505 => 'HTTP Version Not Supported',
-              506 => 'Variant Also Negotiates',
-              507 => 'Insufficient Storage', #WebDAV
-              509 => 'Bandwidth Limit Exceeded', #Apache
-              510 => 'Not Extended'}
+              506 => 'Variant Also Negotiates', # "Experimental"
+              507 => 'Insufficient Storage',
+              508 => 'Loop Detected',
+              509 => 'Bandwidth Limit Exceeded', # Apache, officially unassigned
+              510 => 'Not Extended',
+              511 => 'Network Authentication Required',
+              # 512..599 => :unassigned,
+              }
 
   # Compatibility : make the Response act like a Net::HTTPResponse when needed
   module ResponseForException
