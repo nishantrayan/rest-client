@@ -10,4 +10,7 @@ rescue LoadError
   # NOP, ignore
 end
 
+require 'coveralls'
+Coveralls.wear!
+
 require File.dirname(__FILE__) + '/../lib/restclient'
